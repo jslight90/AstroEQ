@@ -19,6 +19,7 @@
 #include "AstroEQ.h"
 #include "EEPROMReader.h" //Read config file
 
+#define CMD_ST4_CUSTOM		3
 #define CMD_ST4_HIGHSPEED   2
 #define CMD_ST4_STANDALONE  1
 #define CMD_ST4_DEFAULT     0

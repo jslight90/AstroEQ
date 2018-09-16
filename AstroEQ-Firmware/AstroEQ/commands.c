@@ -56,7 +56,7 @@ void Commands_init(unsigned long _eVal, byte _gVal){
         cmd.currentIVal[i] = cmd.stopSpeed[i]+1; //just slower than stop speed as axes are stopped.
         cmd.motorSpeed[i] = cmd.stopSpeed[i]+1; //same as above.
     }
-    Commands_configureST4Speed(CMD_ST4_DEFAULT);
+    Commands_configureST4Speed(CMD_ST4_CUSTOM);
 }
 
 void Commands_configureST4Speed(byte mode) {
@@ -73,6 +73,12 @@ void Commands_configureST4Speed(byte mode) {
         cmd.st4RAIVal[ST4N] =(cmd.siderealIVal[RA])  ; //-1x speed
         cmd.st4RAReverse    = CMD_REVERSE;
         cmd.st4DecIVal      =(cmd.siderealIVal[DC])/2; //2x speed
+	} else if (mode == CMD_ST4_CUSTOM) {
+		//Set the ST4 speeds to custom mode
+		cmd.st4RAIVal[ST4P] =(cmd.siderealIVal[RA])/17; //+16x speed
+		cmd.st4RAIVal[ST4N] =(cmd.siderealIVal[RA])*20; //1/20 sidereal
+		cmd.st4RAReverse    = CMD_FORWARD;
+		cmd.st4DecIVal      =(cmd.siderealIVal[DC])/16;
     } else {
         //Set the ST4 speeds to normal mode (0.25x around sidereal speed)
         cmd.st4RAIVal[ST4P] =(cmd.siderealIVal[RA] * 20)/(20 + cmd.st4SpeedFactor); //(1+SpeedFactor)x speed   -- Max. IVal = 1200, so this will never overflow.
